@@ -18,6 +18,7 @@ class Solution:
         return new
             
     def sortArray(self, nums):
+        return sorted(nums)
         if len(nums)<=1:
             return nums
         mid   = (len(nums))//2
