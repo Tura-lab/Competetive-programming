@@ -14,9 +14,9 @@ class Solution:
             return
         for num in nums:
             if num not in cur:
-                cur.append(num)
-                self.helper(nums, [n for n in cur])
-                cur.pop()
+                # cur.append(num) # Choose
+                self.helper(nums, cur + [num]) # Explore
+                # cur.pop() # Unchoose
         
     def permute(self, nums, cur=[]):       
         self.helper(nums, [])
