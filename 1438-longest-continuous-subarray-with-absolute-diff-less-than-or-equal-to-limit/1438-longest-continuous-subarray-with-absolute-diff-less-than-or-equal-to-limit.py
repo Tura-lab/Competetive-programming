@@ -21,7 +21,7 @@ class Solution:
                 min_d.pop()
             min_d.append(nums[j])
             
-            if abs(max_d[0]-min_d[0]) > limit:
+            if max_d[0]-min_d[0] > limit:
                 if max_d[0] == nums[i]:
                     max_d.popleft()
                 if min_d[0] == nums[i]:
