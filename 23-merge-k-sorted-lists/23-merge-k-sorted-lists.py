@@ -15,18 +15,18 @@ class Solution:
         new = dummy
         
         heap = []
-        heapq.heapify(heap)
         
-        for l in lists:
-            while l:
-                heapq.heappush(heap, l.val)
-                l = l.next
-                
+        for i in range(len(lists)):
+            if lists[i]:
+                heapq.heappush(heap, (lists[i].val, i, lists[i]))
+            
         while heap:
-            new.next = ListNode(heapq.heappop(heap))
-            new = new.next
-        
-        
+            node = heapq.heappop(heap)[-1]
+            new.next = node
+            if node.next:
+                i+=1
+                heapq.heappush(heap, (node.next.val, i, node.next))
+            new = new.next        
         
         return dummy.next
     
