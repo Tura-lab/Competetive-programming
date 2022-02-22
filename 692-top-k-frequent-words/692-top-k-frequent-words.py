@@ -1,10 +1,40 @@
+from collections import Counter
+import heapq
+
 class Solution:
-    def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        words.sort()
-        counter = {}
-        for word in words:
-            if word in counter:
-                counter[word]+=1
+    def topKFrequent(self, nums: List[str], k: int) -> List[str]:
+        counts = Counter(nums)
+        mapper = {}
+        for num, count in counts.items():
+            if count in mapper:
+                mapper[count].append(num)
             else:
-                counter[word]=1
-        return [n[0] for n in sorted(counter.items(),reverse=True, key=lambda item: item[-1])[:k]]
+                mapper[count] = [num]
+                
+        for count, nums in mapper.items():
+            nums.sort()
+        minHeap = []
+        heapq.heapify(minHeap)
+
+        for count, nums in mapper.items():
+            for i in range(len(nums)):
+                if len(minHeap) == k:
+                    if minHeap[0] < counts[nums[i]]:
+                        heapq.heappop(minHeap)
+                        heapq.heappush(minHeap, count)
+
+                else:
+                    heapq.heappush(minHeap, count)
+
+        ans = []
+        minHeap = list(set(minHeap))
+        minHeap.sort(reverse=True)
+        for i in range(len(minHeap)):
+            if len(ans)==k:
+                break
+            for i in mapper[minHeap[i]]:
+                if len(ans)==k:
+                    break
+                ans.append(i)
+
+        return ans
