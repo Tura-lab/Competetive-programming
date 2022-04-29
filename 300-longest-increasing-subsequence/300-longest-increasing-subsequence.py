@@ -6,49 +6,61 @@ class Solution:
     2 3 7 101 
     '''
     def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1]*len(nums)
+        ans = 1
         
-        #Binary search to find the correct index of replacement
-        def findPosAndReplace(num,s, e):
-            mid = (s+e)//2
-            if arr[mid] >= num and (mid-1<0 or arr[mid-1] < num):
-                arr[mid] = num
-                return
-            if arr[mid] > num:
-                findPosAndReplace(num,s,mid)
-            else:
-                findPosAndReplace(num,mid,e)
+        for cur in range(len(nums)):
+            for i in range(cur):
+                if nums[cur] > nums[i]:
+                    dp[cur] = max(dp[cur], dp[i] + 1)
+                    ans = max(ans, dp[cur])
+                    
+        return ans
         
-        arr = []
-        for num in nums:
-            if arr==[] or num>arr[-1]:
-                arr.append(num)
-            else:
-                findPosAndReplace(num,0,len(arr))
-        return len(arr)
-                
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+#         #Binary search to find the correct index of replacement
+#         def findPosAndReplace(num,s, e):
+#             mid = (s+e)//2
+#             if arr[mid] >= num and (mid-1<0 or arr[mid-1] < num):
+#                 arr[mid] = num
+#                 return
+#             if arr[mid] > num:
+#                 findPosAndReplace(num,s,mid)
+#             else:
+#                 findPosAndReplace(num,mid,e)
+        
+#         arr = []
+#         for num in nums:
+#             if arr==[] or num>arr[-1]:
+#                 arr.append(num)
+#             else:
+#                 findPosAndReplace(num,0,len(arr))
+#         return len(arr)
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-#     # Memoized DP (TLE)
+#     # DP (TLE)
 #     def lengthOfLIS(self, nums: List[int]) -> int:
 #         if len(nums) == 1:
 #             return 1
