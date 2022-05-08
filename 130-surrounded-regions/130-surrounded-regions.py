@@ -1,7 +1,6 @@
 class Solution:
     def solve(self, grid: List[List[str]]) -> None:
         seen = set()
-        seen2 = set()
         rows, cols = len(grid), len(grid[0])
         
         def all_paths_lead_to_x(row,col):
@@ -17,9 +16,8 @@ class Solution:
             return left and up and right and bottom
         
         def dfs(row,col):
-            if (row,col) in seen2 or not(-1<row<rows and -1<col<cols) or grid[row][col] == 'X':
+            if not(-1<row<rows and -1<col<cols) or grid[row][col] == 'X':
                 return
-            seen2.add((row,col))
             grid[row][col] = 'X'
             dfs(row,col-1)
             dfs(row-1,col)
