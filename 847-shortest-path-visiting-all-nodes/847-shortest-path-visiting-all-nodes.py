@@ -30,7 +30,6 @@ class Solution:
                 dist+=1
             return 0
         for i in range(0, len(graph)):
-            num = findPath(i, final)
             # print(num)
             ans = min(findPath(i, final), ans)
             
