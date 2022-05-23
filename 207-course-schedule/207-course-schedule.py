@@ -1,38 +1,27 @@
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        if not prerequisites:
-            return True
-        courses = {}
-        seen = set()
-        instack = set()
+    def canFinish(self, n: int, pr: List[List[int]]) -> bool:
+        graph = [[] for _ in range(n)]
+        indeg = [0 for _ in range(n)]
         
-        for pre in prerequisites:
-            pre.append(-1)
-            if pre[0] in courses:
-                courses[pre[0]].append(pre[1])
-            else:
-                courses[pre[0]] = [pre[1]]
-            if pre[1] not in courses:
-                courses[pre[1]] = []
-        
-        def dfs(node):
-            instack.add(node)
-            for n in courses[node]:
-                if n in instack:
-                    return False
-                
-                if n not in seen:
-                    ans = dfs(n)
-                    if ans==False:
-                        return ans
+        for i,j in pr:
+            indeg[i] +=1
+            graph[j].append(i)
             
-            instack.remove(node)
-            seen.add(node)
+        q = collections.deque()
+        for i in range(n):
+            if indeg[i] == 0:
+                q.append(i)
             
-        for i in range(len(prerequisites)):
-            for j in range(2):
-                if prerequisites[i][j] not in seen:
-                    ans = dfs(prerequisites[i][j])
-                    if ans == False:
-                        return False
-        return True
+        count = 0
+        while q:
+            node = q.popleft()
+            count +=1
+            for neigh in graph[node]:
+                indeg[neigh] -=1
+                if indeg[neigh] ==0:
+                    q.append(neigh)
+                    
+                    
+        return count == n
+            
+            
