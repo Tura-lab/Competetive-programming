@@ -1,7 +1,5 @@
 class Solution:
     def numDecodings(self, s: str) -> int:
-        dp = [0]*(len(s)+1)
-        dp[0]=1
         
         first = 0
         second = 1
