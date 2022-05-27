@@ -5,11 +5,10 @@ class Solution:
         
         for i in range(len(points)):
             x1, y1 = points[i]
-            for j in range(i,len(points)):
+            for j in range(i+1,len(points)):
                 x2, y2 = points[j]
                 graph[(x1,y1)].append((abs(x1-x2)+abs(y1-y2), (x2,y2)))
-                if i!=j:
-                    graph[(x2,y2)].append(( abs(x1-x2)+abs(y1-y2), (x1,y1)))
+                graph[(x2,y2)].append(( abs(x1-x2)+abs(y1-y2), (x1,y1)))
         
         heap = []
         heapq.heappush(heap, (0,points[0]))
