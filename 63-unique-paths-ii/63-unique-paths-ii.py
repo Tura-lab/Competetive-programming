@@ -3,21 +3,21 @@ class Solution:
         row = len(obstacleGrid)
         col = len(obstacleGrid[0])
         
-        dp = [[0 for _ in range(col)] for k in range(row)]
-        dp[0][0] = 1 - obstacleGrid[0][0]
         
         for i in range(row):
             for j in range(col):
                 if obstacleGrid[i][j] == 1:
-                    dp[i][j] = 0
+                    obstacleGrid[i][j] = 0
                     continue
-                    
+                if i==0 and j==0:
+                    obstacleGrid[i][j] = 1
+                
                 if -1<j-1<col:
-                    dp[i][j] += dp[i][j-1]
+                    obstacleGrid[i][j] += obstacleGrid[i][j-1]
                 if -1<i-1<row:
-                    dp[i][j] += dp[i-1][j]
+                    obstacleGrid[i][j] += obstacleGrid[i-1][j]
         
-        return dp[-1][-1]
+        return obstacleGrid[i][j]
         
         
         
