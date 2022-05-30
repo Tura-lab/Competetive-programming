@@ -6,7 +6,8 @@ class Solution:
             if i>=len(nums):
                 return 0
             cur = nums[i]
-            if nums[i] not in dp:
+            j=i+1
+            if i not in dp:
                 tot = nums[i]
                 cur = nums[i]
                 
@@ -21,8 +22,8 @@ class Solution:
                 while i<len(nums) and nums[i] == cur+1:
                     i+=1
                     
-                dp[cur] = max(tot + dfs(i), dfs(j))
+                dp[j-1] = max(tot + dfs(i), dfs(j))
                 
-            return dp[cur]
+            return dp[j-1]
         
         return dfs(0)
