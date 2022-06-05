@@ -1,17 +1,16 @@
+# Dani, [6/5/2022 11:25 AM]
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        d = set(wordDict)
-        
-        @cache
-        def solve(j):
-            if j>=len(s):
-                return True
-            
-            ans = False
-            for i in range(j+1,len(s)+1):
-                if s[j:i] in d:
-                    ans = ans or solve(i)
-                    
-            return ans
-        
-        return solve(0)
+        def sol(s,dict,memo):
+            if s in memo: return memo[s]
+            if s == "": return True
+
+            for word in wordDict:
+                if s.startswith(word):
+                    new_s = s[len(word):]
+                    if sol(new_s, wordDict,memo):
+                        memo[s] = True
+                        return True
+            memo[s] = False
+            return False
+        return sol(s,wordDict,{})
