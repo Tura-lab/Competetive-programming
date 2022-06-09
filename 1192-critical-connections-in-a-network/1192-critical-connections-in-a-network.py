@@ -5,13 +5,11 @@ class Solution:
             graph[i].append(j)
             graph[j].append(i)
             
-        index_of = [-1 for i in range(n)]
         lowest_from = [-1 for i in range(n)]
         
         bridges = []
         seen = set()
         def dfs(node, i, parent):
-            index_of[node] = i
             lowest_from[node] = i
             
             for v in graph[node]:
