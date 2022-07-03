@@ -16,16 +16,7 @@ class Solution:
         nxt = head.next
         head.next = prev
         return self.reverseList(nxt, head)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         #Iterative
         # prev = None
