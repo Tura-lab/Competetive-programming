@@ -37,7 +37,8 @@ class Solution:
         
         for i, j in sorted_ratings:
             fix(i)
-
+        
+        
         # print([(candies[i], ratings[i]) for i in range(len(ratings))])
         # print(sum(candies))
         return self.ans
