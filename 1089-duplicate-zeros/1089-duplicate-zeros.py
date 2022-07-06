@@ -4,23 +4,17 @@ class Solution:
         Do not return anything, modify arr in-place instead.
         """
         n = len(nums)
-        shifts = [0]*n
-        count = 0
-        
-        for i in range(n):
-            shifts[i] = count
-            if nums[i] == 0:
-                count +=1
-            
-            
+        count = nums.count(0)
+
         i = n-1
         while i>-1:
-            if i + shifts[i]<n:
-                # print(i + shifts[i], i)
-                nums[i + shifts[i]] = nums[i]
-                if nums[i + shifts[i]] == 0 and i + shifts[i] + 1 < n:
-                    nums[i + shifts[i] + 1] = 0
-
+            if nums[i] == 0:
+                count -= 1
+            if i + count<n:
+                nums[i + count] = nums[i]
+                if nums[i + count] == 0 and i + count + 1 < n:
+                    nums[i + count + 1] = 0
+            
             i-=1
             
         # print(shifts)
