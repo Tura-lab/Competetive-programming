@@ -7,13 +7,8 @@ class Solution:
                     count+=1
             return 0 if count==target else -1 
         
-        editable = [0]*m
         count = 0
-        for i in range(m-1, -1, -1):
-            if houses[i] == 0:
-                count +=1
-            editable[i] = count
-        
+
         @cache
         def solve(i, j, k):
             if i==m:
