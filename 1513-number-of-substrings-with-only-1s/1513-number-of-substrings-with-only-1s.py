@@ -9,10 +9,10 @@ class Solution:
                 if start==None: 
                     start = i
                     
-                ans = (ans + i-start+1)%mod
+                ans += i-start+1
             else:
                 start = None
                 
-        return ans
+        return ans%mod
                 
         
