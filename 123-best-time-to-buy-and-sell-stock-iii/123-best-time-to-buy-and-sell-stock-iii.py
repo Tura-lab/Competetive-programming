@@ -5,7 +5,7 @@ class Solution:
         # The problem is litterally the same as the IVth variant but this time k==2
         
         k = 2
-        dp = [[[-1 for _ in range(k+1)] for __ in range(2)] for ___ in range(len(prices)+1)]
+        dp = [[[-1 for _ in range(k)] for __ in range(2)] for ___ in range(len(prices)+1)]
         def solve(i, last, made_yet):
             if i == len(prices) or made_yet==k:
                 return 0
