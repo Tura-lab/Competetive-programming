@@ -1,16 +1,10 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
         seen = set()
-        def solve(n):
-            if n == 1: return True
-            if n in seen:return False
-            
-            seen.add(n)
-
-            new = 0
-            for i in str(n):
-                new += int(i)**2
-
-            return solve(new)
         
-        return solve(n)
+        while n !=1 and n not in seen:
+            seen.add(n)
+            n = sum(int(i)**2 for i in str(n))
+            
+        return n==1
+            
