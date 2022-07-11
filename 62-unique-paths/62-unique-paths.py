@@ -1,17 +1,16 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
         
-        cache = {}
-        def walker(i,j):
-            if (i,j) in cache:
-                return cache[(i,j)]
-            if i==m and j==n:
-                return 1
-            down = 0 if i==m else walker(i+1,j)
-            right = 0 if j==n else walker(i, j+1)
-            
-            cache[(i,j)] = down + right
-            return cache[(i,j)]
-
-        return walker(1,1)
+        dp = [[0]*n for _  in range(m)]
         
+        for i in range(m):
+            for j in range(n):
+                if i==0 or j==0:
+                    dp[i][j] = 1
+                    
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+                
+        
+        return dp[m-1][n-1]
