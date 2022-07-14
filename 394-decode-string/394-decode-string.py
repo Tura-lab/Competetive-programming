@@ -19,28 +19,8 @@ class Solution:
                 return out * k, j
             j+=1
         return out
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
+# Iterative
 #         stack = []
 #         for i in range(len(s)):
 #             if s[i] != ']':
