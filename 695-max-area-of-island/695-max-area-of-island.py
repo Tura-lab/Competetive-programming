@@ -18,8 +18,7 @@ class Solution:
         
         for i in range(len(grid)):
             for j in range(len(grid[0])):
-                if (i,j) not in visited:
-                    area = max(dfs(i,j), area)
+                area = max(dfs(i,j), area)
         
         return area
         
