@@ -2,48 +2,52 @@
 # class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
-#         self.next = next 
-
+#         self.next = next
 class Solution:
-    def merge(self, head, slow):
-        if head.val > slow.val:
-            new = slow
-            slow = slow.next
-        else:
-            new = head
-            head = head.next
-        h=new
-        while head and slow:
-            if slow.val < head.val:
-                new.next = slow
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # def printer(head):
+        #     while head:
+        #         print(f'{head.val} -> ', end = '')
+        #         head = head.next
+        #     print()
+        '''
+        1 - 2
+            |
+               |
+        '''
+            
+        # print(length)
+        def merge_sort(head):
+            if not head or not head.next:
+                return head
+            
+            fast = slow = head
+            while fast and fast.next:
+                prev = slow
                 slow = slow.next
-            else:
-                new.next = head
-                head = head.next
-            new = new.next
-        new.next = head or slow
-        head=h
-        return head
-    
-    def findMid(self,head):
-        fast = slow = head
-        while fast and fast.next:
-            fast = fast.next.next
-            past = slow
-            slow = slow.next
-        past.next = None
-        return head, slow
-    
-    def mergeSort(self,head):
-        if head and head.next:
-            head, slow = self.findMid(head)
-            left = self.mergeSort(head)
-            right = self.mergeSort(slow)
-            return self.merge(left,right)
-        else:
-            h=head
-            return head
+                fast = fast.next.next
+            prev.next = None
+            
+            l = merge_sort(head)
+            r = merge_sort(slow)
+            
+            t = ListNode()
+            temp = t
+
+            while l and r:
+                if l.val < r.val:
+                    nxt = l.next
+                    temp.next = l
+                    l = nxt
+                else:
+                    nxt = r.next
+                    temp.next = r
+                    r=nxt
+                temp = temp.next
+            
+            if r: temp.next = r
+            if l: temp.next = l
+                        
+            return t.next
         
-    def sortList(self, head):
-        return self.mergeSort(head)
-                
+        return merge_sort(head)
