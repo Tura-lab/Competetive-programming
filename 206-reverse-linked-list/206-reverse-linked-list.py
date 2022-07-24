@@ -4,28 +4,14 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    '''
-     1 -> 2
-    '''
-    def reverseList(self, head, prev=None):
-        if head==None:
-            return
-        if head.next == None:
-            head.next = prev
-            return head
-        nxt = head.next
-        head.next = prev
-        return self.reverseList(nxt, head)
-
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        def reverse_list(cur, prev):
+            if not cur:
+                return prev
+            
+            head = reverse_list(cur.next, cur)
+            cur.next = prev
         
-        #Iterative
-        # prev = None
-        # curr = head
-        # while curr is not None:
-        #     nxt = curr.next
-        #     curr.next = prev
-        #     prev = curr
-        #     curr = nxt
-        # head = prev
-        # return head
-    
+            return head
+        
+        return reverse_list(head, None)
