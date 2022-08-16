@@ -17,41 +17,52 @@ class Trie:
                 node.children[ord(c)-ord('a')] = n
             node = node.children[ord(c)-ord('a')]
         node.isEnd=True
-    
-    def traverse(self, prefix):
+
+    def search(self, word: str) -> bool:
         node = self.root
-        j=0
+        for i in range(len(word)):
+            c = word[i]
+            if not node.children[ord(c) - ord('a')] or node.children[ord(c) - ord('a')].val != c:
+                return False
+            node = node.children[ord(c) - ord('a')]
+        
+        return node.isEnd
+
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root
         for i in range(len(prefix)):
             c = prefix[i]
             if not node.children[ord(c) - ord('a')] or node.children[ord(c) - ord('a')].val != c:
-                return j if node.isEnd else 0
-            
-            if node.isEnd:
-                return j;
-            
+                return False
             node = node.children[ord(c) - ord('a')]
-            j+=1
         
-        return j
-
+        return True
 
 class Solution:
     def replaceWords(self, dictionary: List[str], sentence: str) -> str:
         trie = Trie()
+        
         for word in dictionary:
             trie.insert(word)
-
-        s = sentence.split()
-        for i in range(len(s)):
-            word = s[i]
-            ans = trie.traverse(word)
-            if ans !=0:
-                s[i] = s[i][:ans]
             
-        return ' '.join(s)
-                    
-                
+        ans = []
+        for word in sentence.split():
+            node = trie.root
+        
+            i=0
+            f=0
+            while not node.isEnd and i<len(word):
+                c = word[i]
+                if node.children[ord(c)-ord('a')]:
+                    node = node.children[ord(c)-ord('a')]
+                else:
+                    f=1
+                    break
+                i+=1
+            if node.isEnd and not f:
+                ans.append(word[:i])
+            else:
+                ans.append(word)
         
         
-        
-        
+        return ' '.join(ans)
