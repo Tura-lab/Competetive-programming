@@ -3,17 +3,17 @@ class Solution:
         steps = 0
         '''
         19, 2
-        19//2 = 9
+        18//2 = 9
         9 // 4
         '''
         for _ in range(maxDoubles):
             if target == 1:
                 break
                 
-            if target % 2 == 1:
-                target -=1
+            if (target & 1) != 0:
                 steps += 1
-            target //= 2
+                
+            target = target>>1
             steps += 1
         
         steps += (target - 1)
