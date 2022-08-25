@@ -7,42 +7,44 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        def dfs(root):
-            if not root or root==p or root==q:
-                return root
+        
+        def dfs(node, temp):
+            if not node:
+                return
+            if node.val == target.val:
+                path.append(temp + [node])
+                # print(path)
+                return
             
-            left = dfs(root.left)
-            right = dfs(root.right)
-
-            if left and right:
-                return root
-            elif left:
-                return left
-            else:
-                return right
-        
-        
-        return dfs(root)
-        
-        
-#         BAADDD
-#         roots = []
-        
-#         def helper(root, arr):
-#             if not root:
-#                 return
-#             if root == p:
-#                 roots.append (arr + [p])
-#             if root == q:
-#                 roots.append(arr + [q])
+            temp.append(node)
+            dfs(node.left, temp)
+            dfs(node.right, temp)
+            temp.pop()
             
-#             helper(root.left, arr+[root])
-#             helper(root.right, arr+[root])
+            
+        path = []
+        target = p
+        dfs(root, [])
         
-#         helper(root, [])
+        target = q
+        dfs(root, [])
         
-#         set1 =set(roots[0])
-#         for i in range(len(roots[1])-1,-1,-1):
-#             node = roots[1][i]
-#             if node in set1:
-#                 return node
+        
+        path_for_p = path[0]
+        path_for_q = path[1]
+        
+        for i in range(min(len(path_for_p), len(path_for_q))):
+            if path_for_p[i] != path_for_q[i]:
+                return path_for_q[i-1]
+        
+        if len(path_for_p) < len(path_for_q):
+            return path_for_p[-1]
+        return path_for_q[-1]
+            
+            
+            
+            
+            
+            
+            
+            
