@@ -23,7 +23,6 @@ class Solution:
         for i in range(len(nums)-2, -1, -1):
             if found[-1][0] < nums[i]:
                 found.append((nums[i], i))
-            # print(nums[i],found)
             ans = max(ans, find(nums[i])-i)
                 
         return ans
