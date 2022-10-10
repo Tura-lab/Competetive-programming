@@ -6,45 +6,16 @@
 #         self.right = right
 class Solution:
     def bstToGst(self, root: TreeNode) -> TreeNode:
-        self.ll = []
-        def dfs(root):
-            if not root:return
-
-            self.ll.append(root.val)
-            dfs(root.right)
-            dfs(root.left)
-        
-        dfs(root)
-        self.ll.sort()
-
-        p_sum = [0]
-        for num in self.ll:
-            p_sum.append(num+p_sum[-1])
-
-        def binS(num):
-            l = 0
-            r = len(self.ll)-1
-            ans = r+1
-            while l<=r:
-                mid = l + (r-l)//2
-                if self.ll[mid] > num:
-                    ans = mid
-                    r = mid-1
-                else:
-                    l = mid+1
+        self.tot = 0
+        def dfs(node):
+            if not node:
+                return 
             
-            return ans
-
-        def f(root):
-            if not root:return
-
-            idx = binS(root.val)
-            # print(root.val, idx, self.ll, p_sum, p_sum[-1]-p_sum[idx])
-            root.val = root.val + p_sum[-1]-p_sum[idx]
-            # print()
-
-            f(root.left)
-            f(root.right)
-
-        f(root)
+            dfs(node.right)
+            old = node.val
+            node.val += self.tot
+            self.tot += old
+            dfs(node.left)
+            
+        dfs(root)
         return root
