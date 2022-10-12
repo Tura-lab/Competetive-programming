@@ -6,30 +6,19 @@
 #         self.right = right
 class Solution:
     def getDirections(self, root: Optional[TreeNode], start: int, end: int) -> str:
-        def dfs(node):
-            if not node:
-                return None
-            if node.val in (start, end):
-                return node
-                
-            
-            left = dfs(node.left)
-            right = dfs(node.right)
-            
-            if left and right:
-                return node
-            
-            return left or right
-        
-        self.s = []
+        to_start = []
+        to_end = []
         path = []
-        par = dfs(root)
         def dfs(node):
+            nonlocal to_start, to_end
             if not node:
-                return 
-            if node.val == end:
-                self.s = path[:]
+                return
             
+            if node.val == start:
+                to_start = path[:]
+            if node.val == end:
+                to_end = path[:]
+                
             path.append('L')
             dfs(node.left)
             path.pop()
@@ -37,25 +26,15 @@ class Solution:
             path.append('R')
             dfs(node.right)
             path.pop()
-                
-        dfs(par)
-        path = []
-        self.e = []
-        def dfs(node):
-            if not node:
-                return 
-            if node.val == start:
-                self.e = path[:]
-                return
             
-            path.append('U')
-            dfs(node.left)
-            dfs(node.right)
-            path.pop()
+        dfs(root)
+        i = 0
+        while i<len(to_start) and i<len(to_end) and to_start[i] == to_end[i]:
+            i+=1
             
-        dfs(par)
-        return ''.join(self.e + self.s)
-            
-            
-            
-            
+        to_start=  to_start[i:]
+        to_end = to_end[i:]
+        to_start = ['U']*len(to_start)
+        
+        
+        return ''.join(to_start + to_end)
