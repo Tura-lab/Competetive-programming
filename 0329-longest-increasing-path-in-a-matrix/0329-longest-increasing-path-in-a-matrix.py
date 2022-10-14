@@ -1,22 +1,33 @@
 class Solution:
-    def longestIncreasingPath(self, grid: List[List[int]]) -> int:
-        r,c = len(grid),len(grid[0])
-        found = [[-1]*c for _ in range(r)]
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        directions = [[1,0], [0,1], [0,-1],[-1,0]]
+        r,c = len(matrix), len(matrix[0])
         
-        def dfs(i,j):
-            if found[i][j] == -1:
-                count = 1
-                for x,y in [[1,0],[0,1],[-1,0],[0,-1]]:
-                    a,b = x+i,y+j
-                    if -1<a<r and -1<b<c and grid[a][b] > grid[i][j]:
-                        count = max(count, 1 + dfs(a,b))
-                
-                found[i][j] = count
-            
-            return found[i][j]
+        graph = defaultdict(list)
+        indeg = defaultdict(int)
         
         for i in range(r):
             for j in range(c):
-                dfs(i,j)
+                for x,y in directions:
+                    nx,ny = x+i, y+j
+                    if -1<nx<r and -1<ny<c and matrix[nx][ny] > matrix[i][j]:
+                        graph[(i,j)].append((nx,ny))
+                        indeg[(nx,ny)] += 1
+                        
+        q = deque()
+        for i in range(r):
+            for j in range(c):
+                if indeg[(i,j)] == 0:
+                    q.append((i,j))
                 
-        return max(max(a) for a in found)
+        count = 0
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                
+                for v in graph[node]:
+                    indeg[v] -=1
+                    if indeg[v] == 0:
+                        q.append(v)
+            count +=1
+        return count
