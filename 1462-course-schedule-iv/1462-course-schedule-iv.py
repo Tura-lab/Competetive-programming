@@ -1,34 +1,29 @@
 class Solution:
     def checkIfPrerequisite(self, numCourses: int, prerequisites: List[List[int]], queries: List[List[int]]) -> List[bool]:
-        n = numCourses
-        reached_by = [set() for _ in range(n)]
+        parents = [set() for _ in range(numCourses)]
+        indeg = [0]*numCourses
+        graph = [[]for _ in range(numCourses)]
         
-        incomming = [0]*n
-        outgoing  = [set() for _ in range(n)] 
-        
-        for fro, to in prerequisites:
-            incomming[to] += 1
-            outgoing[fro].add(to)
-
-        q = collections.deque()
-        
-        for key in range(n):
-            if incomming[key] == 0:
-                q.append(key)
+        for a,b in prerequisites:
+            graph[a].append(b)
+            indeg[b] += 1
+            
+        q = deque()
+        for i in range(numCourses):
+            if indeg[i] == 0:
+                q.append(i)
                 
         while q:
-            node = q.popleft()
-            
-            for v in outgoing[node]:
-                reached_by[v].add(node)
+            for _ in range(len(q)):
+                node = q.popleft()
                 
-                incomming[v]-=1
-                if incomming[v] == 0:
-                    q.append(v)
-                
-                for past in reached_by[node]:
-                    reached_by[v].add(past)
+                for v in graph[node]:
+                    parents[v].add(node)
+                    for x in parents[node]:
+                        parents[v].add(x)
+                    
+                    indeg[v] -=1
+                    if indeg[v] == 0:
+                        q.append(v)
         
-        # print(reached_by)
-        return [u in reached_by[v] for u,v in queries]
-            
+        return  [u in parents[v] for u,v in queries]
