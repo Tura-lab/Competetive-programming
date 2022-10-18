@@ -28,6 +28,4 @@ class Solution:
         new += ' ' * (maxWidth - len(new))
         ans.append(new)
         
-        # for a in ans:print(a)
         return ans
-        # for a in ans:print(a)
