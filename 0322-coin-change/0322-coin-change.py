@@ -1,19 +1,22 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        coins = list(set(coins))
-        coins.sort(reverse=True)
+        if amount == 0:
+            return 0
+        q = deque([0])
+        visited = set([0])
         
-        @cache
-        def dfs(i, amount):
-            if amount == 0:
-                return 0
-            if amount < 0 or i==len(coins):
-                return float('inf')
-            
-            take = 1 + dfs(i, amount-coins[i])
-            dont = dfs(i+1, amount)
-        
-            return min(take, dont)
-        
-        ans = dfs(0, amount)
-        return -1 if ans == float('inf') else ans
+        count = 0
+        while q:
+            for _ in range(len(q)):
+                val = q.popleft()
+                
+                for coin in coins:
+                    new = val + coin
+                    if new == amount:
+                        return count +1
+                    elif new < amount and new not in visited:
+                        q.append(new)
+                        visited.add(new)
+            count += 1
+        return -1
+                        
