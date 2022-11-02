@@ -6,18 +6,10 @@ class Solution:
         total = (1 << ((r*c))) -1
         start = None
         
-        nums = {}
-        count = 0
-        for i in range(r):
-            for j in range(c):
-                nums[(i,j)] = count
-                count += 1
-        
-        
         for i in range(r):
             for j in range(c):
                 if grid[i][j] == -1:
-                    total ^= 1 << nums[(i,j)]
+                    total ^= 1 << (i*c + j)
                 if grid[i][j] == 1:
                     start = (i,j)
         
@@ -31,12 +23,12 @@ class Solution:
             
             for x,y in [[1,0],[-1,0],[0,1],[0,-1]]:
                 nx,ny = i+x, j+y
-                if -1<nx<r and -1<ny<c and grid[nx][ny] != -1 and (1 << nums[(nx,ny)]) & mask == 0:
+                if -1<nx<r and -1<ny<c and grid[nx][ny] != -1 and (1 << (nx*c + ny)) & mask == 0:
                     # path.append((nx,ny))
-                    dfs(nx, ny, mask | (1 << nums[(nx,ny)]))
+                    dfs(nx, ny, mask | (1 << (nx*c + ny)))
                     # path.pop()
             
         # path = [(start[0], start[1])]
-        dfs(start[0], start[1], 1 << nums[(start[0], start[1])])
+        dfs(start[0], start[1], 1 << (start[0]*c + start[1]))
         return self.ans
     
