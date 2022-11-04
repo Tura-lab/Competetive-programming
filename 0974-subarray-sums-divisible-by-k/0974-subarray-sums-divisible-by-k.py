@@ -8,9 +8,9 @@ class Solution:
         ans = 0
         for num in nums:
             cur += num
-            val = cur % k
-            ans += found[val]
-            found[val] += 1
+            cur %= k
+            ans += found[cur]
+            found[cur] += 1
             
             
         return ans
