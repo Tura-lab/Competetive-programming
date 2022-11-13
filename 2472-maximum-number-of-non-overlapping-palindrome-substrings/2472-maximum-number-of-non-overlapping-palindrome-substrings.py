@@ -3,8 +3,8 @@ class Solution:
         '''
         Input: s = "abaccdbbd", k = 3
         '''
-        if len(set(s)) == 1:
-            return len(s) // k
+        # if len(set(s)) == 1:
+        #     return len(s) // k
         
         pals = dict()
         def check(i,j):
