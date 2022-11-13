@@ -5,10 +5,12 @@ class Solution:
         '''
         if len(set(s)) == 1:
             return len(s) // k
-        pals = set()
+        
+        pals = dict()
         def check(i,j):
             while i>-1 and j<len(s) and s[i] == s[j]:
-                pals.add((i,j))
+                if j-i+1 >=k and (i not in pals or j-i < pals[i]-i):
+                    pals[i] = j                    
                 i-=1
                 j+=1
             
@@ -16,8 +18,7 @@ class Solution:
             check(i,i)
             check(i,i+1)
                 
-        pals = sorted([(i,j) for i,j in pals if j-i+1 >= k], key = lambda x: x[1])
-        
+        pals = sorted([(i,j) for i,j in pals.items()], key = lambda x: x[1])
         count = 0
         past = -1
         for i in range(len(pals)):
@@ -25,6 +26,5 @@ class Solution:
                 past = pals[i][1]
                 count += 1
                 
-        # print(pals)
         return count
         
