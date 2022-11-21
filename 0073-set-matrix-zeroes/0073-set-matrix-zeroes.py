@@ -9,16 +9,17 @@ class Solution:
         for i in range(rows):
             for j in range(cols):
                 if matrix[i][j] == 0:
-                    done_rows.add(i)
-                    done_cols.add(j)
+                    matrix[i][j] = '#'
+                    for col in range(cols):
+                        if matrix[i][col] != 0:
+                            matrix[i][col] = '#'
+                    for row in range(rows):
+                        if matrix[row][j] != 0:
+                            matrix[row][j] = '#'
         
-        for i in done_rows:
+        for i in range(rows):
             for j in range(cols):
-                matrix[i][j] = 0
-        
-        for j in done_cols:
-            for i in range(rows):
-                matrix[i][j] = 0
-                
-        
-        
+                if matrix[i][j] == '#':
+                    matrix[i][j] = 0
+                    
+                    
