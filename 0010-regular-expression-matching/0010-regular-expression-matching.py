@@ -1,5 +1,6 @@
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
+        @cache
         def dfs(i, j):
             if i == len(s) and not (j+1 < len(p) and p[j+1] == '*'):
                 return j == len(p) or (j == len(p)-2 and p[j+1] == '*')
