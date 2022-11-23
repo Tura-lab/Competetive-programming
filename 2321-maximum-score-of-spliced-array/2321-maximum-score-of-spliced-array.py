@@ -1,35 +1,25 @@
-from functools import lru_cache
-
 class Solution:
     def maximumsSplicedArray(self, nums1: List[int], nums2: List[int]) -> int:
         '''
         20  40  20  70  30
         50  20  50  40  20
         '''
-        def dfs(i, turn, swapped):
-            if i == n:
-                return 0
+        s1, s2 = sum(nums1), sum(nums2)
+        # if s2 > s1:
+        #     nums1, nums2 = nums2, nums1
             
-            if (i, turn, swapped) not in memo:
-                
-                ans = nums[turn][i] + dfs(i+1, turn, swapped)
-                
-                if not swapped:
-                    ans = max(ans, nums[1][i] + dfs(i+1, 1, True))
-                if swapped and turn == 1:
-                    ans = max(ans, nums[0][i] + dfs(i+1, 0, swapped))
+        curmn = curmx = mn = mx = nums2[0] - nums1[0]
+        for i in range(1, len(nums1)):
+            curmn += nums2[i] - nums1[i]
+            curmx += nums2[i] - nums1[i]
             
-                memo[(i, turn, swapped)] = ans
+            if curmn >= nums2[i] - nums1[i]:
+                curmn = nums2[i] - nums1[i]
+            if curmx <= nums2[i] - nums1[i]:
+                curmx = nums2[i] - nums1[i]
             
-            return memo[(i, turn, swapped)]
+            mn = min(mn, curmn)
+            mx = max(mx, curmx)
         
-        nums = [nums1, nums2]
-        n = len(nums1)
-        
-        memo = {}
-        first = dfs(0, 0, False)
-        nums[0], nums[1] = nums[1], nums[0]
-        
-        memo = {}
-        
-        return max(first, dfs(0, 0, False))
+        # print(mx, mn, s1, s2)
+        return max(s1, s2, s1 + mx, s2 - mn)
