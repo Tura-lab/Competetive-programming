@@ -1,12 +1,25 @@
 class Solution:
     def numSquares(self, n: int) -> int:
-        dp = [float('inf') for _ in range(n+1)]
-        dp[0] = 0
+        perfect_squares = []
         
-        powers = {i : i**2 for i in range(ceil(sqrt(n+1)))}
+        for i in range(1, int(sqrt(n)+1)):
+            perfect_squares.append(i*i)
         
-        for i in range(1, n+1):
-            for j in range(ceil(sqrt(n+1))):
-                dp[i] = min(dp[i], 1 + dp[i - powers[j]])
-                
-        return dp[-1]
+        q = deque([0])
+        visited = set([0])
+        
+        steps = 1
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                for num in perfect_squares:
+                    cur = num + node
+                    
+                    if cur == n:
+                        return steps
+                    
+                    if cur < n and cur not in visited:
+                        visited.add(cur)
+                        q.append(cur)
+            steps += 1
+        
