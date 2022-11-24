@@ -1,13 +1,23 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
         n = len(nums)
-        dp = [float('inf')] * n
         
-        dp[0] = 0
+        q = deque([0])
+        visited = set()
         
-        for i in range(n):
-            for j in range(1, min(n - i, nums[i] + 1)):
-                dp[i + j] = min(dp[i + j], 1 + dp[i])
+        dist = 0
+        while q:
+            for _ in range(len(q)):
+                node = q.popleft()
+                
+                if node == n-1:
+                    return dist
+                
+                if nums[node] == 0:continue
+                
+                for i in range(node + 1, min(n, node + nums[node] + 1)):
+                    if i in visited:continue
+                    visited.add(i)
+                    q.append(i)
+            dist += 1
             
-        # print(dp)
-        return dp[-1]
