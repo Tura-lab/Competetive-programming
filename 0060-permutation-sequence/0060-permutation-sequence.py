@@ -12,9 +12,7 @@ class Solution:
         nums = [i for i in range(1, n+1)]
         ans = []
         
-        def dfs(k):
-            if len(ans) == n:
-                return
+        while len(ans) < n:
             i = 0
             count = 0
             while count + factorials[(len(nums) - 1)] < k:
@@ -24,8 +22,7 @@ class Solution:
             ans.append(str(nums[i]))
             nums.remove(nums[i])
             
-            dfs(k - count)
+            k -= count
             
-        dfs(k)
         return ''.join(ans) 
             
