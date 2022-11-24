@@ -3,6 +3,18 @@ class Solution:
         row, col = len(board), len(board[0])
         self.ans = False
         
+        word_count = Counter(word)
+        counter  = defaultdict(int)
+        
+        for a in board:
+            for b in a:
+                counter[b] += 1
+        
+        for w in word:
+            if word_count[w] > counter[w]:
+                return False
+        
+        
         def dfs(i, j, k):
             if k ==len(word):
                 self.ans = True
