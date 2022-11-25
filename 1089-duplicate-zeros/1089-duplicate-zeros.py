@@ -3,20 +3,19 @@ class Solution:
         """
         Do not return anything, modify arr in-place instead.
         """
-        n = len(nums)
-        count = nums.count(0)
-
-        i = n-1
-        while i>-1:
-            if nums[i] == 0:
-                count -= 1
-            if i + count<n:
-                nums[i + count] = nums[i]
-                if nums[i + count] == 0 and i + count + 1 < n:
-                    nums[i + count + 1] = 0
-            
-            i-=1
-            
-        # print(shifts)
-        # print(nums)
+        '''
+        1 0 0 2 3 0 0 4
         
+        '''
+        
+        zeros = nums.count(0)
+        n = len(nums)
+        
+        for i in range(n-1, -1, -1):
+            zeros -= nums[i] == 0
+            
+            idx = i
+            if idx + zeros < n:
+                nums[idx + zeros] = nums[i]
+                if idx + zeros + 1 < n and nums[i] == 0:
+                    nums[idx + zeros + 1] = 0
