@@ -9,11 +9,11 @@ class Solution:
         
         ans = [[], []]
         
-        for name, count in counts.items():
+        for name, count in sorted(list(counts.items())):
             
             if count == 0:
                 ans[0].append(name)
             elif count == 1:
                 ans[1].append(name)
                 
-        return [sorted(ans[0]), sorted(ans[1])]
+        return ans
