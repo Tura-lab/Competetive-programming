@@ -1,33 +1,24 @@
 class Solution:
     def findRadius(self, houses: List[int], heaters: List[int]) -> int:
         heaters.sort()
+        houses.sort()
+        '''
+        he => heaters
+        ho => houses
+        
+        
+        '''
         
         def check(rad):
-            ranges = []
-            for h in heaters:
-                ranges.append((h - rad, h + rad))
+            j = 0
+            for i, heater in enumerate(heaters):
+                while j < len(houses) and heater - rad <= houses[j] <= heater + rad:
+                    j += 1
             
-            for house in houses:
-                l2, r2 = 0, len(ranges)-1
-                found = False
-                
-                while l2<=r2:
-                    mid2 = l2 + (r2 - l2) // 2
+            return j == len(houses)
                     
-                    if ranges[mid2][0] > house:
-                        r2 = mid2 - 1
-                    elif ranges[mid2][1] < house:
-                        l2 = mid2 + 1
-                    else:
-                        found = True
-                        break
-                
-                if not found: return False
-                
-            return True
-            
         
-        l, r = 0, 10**10
+        l, r = 0, 10**9
         
         ans = 0
         while l <= r:
