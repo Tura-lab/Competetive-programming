@@ -9,7 +9,7 @@ class Solution:
         while l <= r:
             mid = l + (r - l) // 2
             
-            if mid ** 2 <= x:
+            if pow(mid, 2) <= x:
                 ans = mid
                 l = mid + 1
             else:
