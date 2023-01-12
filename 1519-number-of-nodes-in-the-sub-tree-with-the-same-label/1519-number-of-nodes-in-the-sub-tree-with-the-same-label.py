@@ -22,6 +22,8 @@ class Solution:
         
         dfs(0, -1)
         
+        return [dp[node][ord(labels[node]) - ord('a')] for node in range(n)]
+        
         ans = []
         for node in range(n):
             ans.append(dp[node][ord(labels[node]) - ord('a')])
