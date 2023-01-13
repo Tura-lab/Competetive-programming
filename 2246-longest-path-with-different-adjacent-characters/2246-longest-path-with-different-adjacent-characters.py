@@ -22,7 +22,6 @@ class Solution:
             self.ans = max(self.ans, 1+a+b)
             
             if p!=None and s[node] != s[p]:
-                # print(node, p, (left,right))
                 return 1 + max(a,b)
             return 0
             
