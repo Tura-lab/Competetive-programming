@@ -4,16 +4,16 @@ class Solution:
         mod = 10 ** 9 + 7
         n = len(nums)
         
-        counts = [0] * 32
+        counts = [0] * 31
         nums.sort(reverse=True)
         
         for num in nums:
-            for i in range(32):
+            for i in range(31):
                 if 1 << i & num:
                     counts[i] += 1
                     
         for j in range(len(nums)):
-            for i in range(32):
+            for i in range(31):
                 if counts[i]:
                     nums[j] = nums[j] | 1 << i
                     counts[i] -= 1
