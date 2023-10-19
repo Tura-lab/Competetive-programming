@@ -7,28 +7,35 @@ class Solution:
         ( ( ) ) 
         ( ( ) 
         """
-        
-        closing = dict()
         ans = []
-        stack = []
+        count = 0
         for i, char in enumerate(s):
             if char not in '()':
-                ans.append((i, char))
+                ans.append(char)
             
             else:
                 if char == '(':
-                    stack.append(i)
-                    ans.append((i, '('))
+                    count += 1
+                    ans.append(char)
                 else:
-                    if stack:
-                        ans.append((i, ')'))
-                        stack.pop()
+                    if count:
+                        count -= 1
+                        ans.append(char)
                         
-        new_ans, j = [], 0
-        for i, char in ans:
-            if j < len(stack) and stack[j] == i:
-                j += 1
-                continue
-            new_ans.append(char)
+        new_ans = []
+        count = 0
+        for i in range(len(ans) - 1, -1, -1):
+            char = ans[i]
+            if char not in '()':
+                new_ans.append(char)
             
-        return "".join(new_ans)
+            else:
+                if char == ')':
+                    count += 1
+                    new_ans.append(char)
+                else:
+                    if count:
+                        new_ans.append(char)
+                        count -= 1
+        
+        return "".join(new_ans[::-1])
