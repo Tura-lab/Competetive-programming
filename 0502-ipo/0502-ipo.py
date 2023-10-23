@@ -4,9 +4,9 @@ class Solution:
         
         projects = sorted(list(zip(capital, profits)))
         
-        # If we can afford anything
-        if projects[-1][0] <= w:
-            return sum(sorted(profits, reverse=True)[:k]) + w
+        # # If we can afford anything
+        # if projects[-1][0] <= w:
+        #     return sum(sorted(profits, reverse=True)[:k]) + w
         
         i = 0
         print(k)
