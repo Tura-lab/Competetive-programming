@@ -1,48 +1,24 @@
 class Solution:
     def tallestBillboard(self, rods: List[int]) -> int:
-        first_half, second_half = defaultdict(tuple), defaultdict(tuple)
+        dp = defaultdict(int)
+        dp[0] = 0
         
-        def dfs(i, a, b, nums, d):
-            if i == len(nums):
-                dif = a - b
-                if dif not in d:
-                    d[dif] = (a, b)
-                    
-                else:
-                    if a + b > d[dif][0] + d[dif][1]:
-                        d[dif] = (a, b)
-                        
-                return
-            
-            # let the first take
-            dfs(i + 1, a + nums[i], b, nums, d)
-            
-            # let the second take
-            dfs(i + 1, a, b + nums[i], nums, d)
-            
-            # pass
-            dfs(i + 1, a, b, nums, d)
-            
-        a, b = rods[:len(rods) // 2], rods[len(rods) // 2:]
-            
-        dfs(0, 0, 0, a, first_half)
-        dfs(0, 0, 0, b, second_half)
+        for rod in rods:
+            new_dp = dp.copy()
+            for dif in dp:
+                tall = dp[dif]
+                short = tall - dif
+                
+                # add it to short
+                new_tall, new_short = max(tall, short + rod), min(tall, short + rod)
+                val = new_dp[new_tall - new_short] if new_tall - new_short in new_dp else 0
+                new_dp[new_tall - new_short] = max(val, new_tall)
         
-        ans = 0
-        for dif, first_pair in first_half.items():
-            left, right = first_pair
+                # add it to tall
+                new_tall, new_short = max(tall + rod, short), min(tall + rod, short)
+                val = new_dp[new_tall - new_short] if new_tall - new_short in new_dp else 0
+                new_dp[new_tall - new_short] = max(val, new_tall)
             
-            if -dif in second_half:
-                left1, right1 = second_half[-dif]
-                ans = max(ans, left + left1)
-
+            dp = new_dp
             
-        for dif, first_pair in second_half.items():
-            left, right = first_pair
-            
-            if -dif in first_half:
-                left1, right1 = first_half[-dif]
-                ans = max(ans, left + left1)
-                
-                
-        return ans
+        return dp[0]
