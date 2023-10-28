@@ -1,19 +1,22 @@
 class Solution:
     def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
         n = len(nums)
-        heap = []
+        q = deque()
         ans = max(nums)
         
         for i, num in enumerate(nums):
-            while heap and i - heap[0][1] > k:
-                heappop(heap)
-        
-            val = 0 if not heap else -heap[0][0]
+            
+            while q and i - q[0][1] > k:
+                q.popleft()
+            
+            val = 0 if not q else q[0][0]
             
             new_num = max(num, num + val)
             ans = max(ans, new_num)
             
-            heappush(heap, (-new_num, i))
-        
+            while q and q[-1][0] <= new_num:
+                q.pop()
+                
+            q.append((new_num, i))
         
         return ans
