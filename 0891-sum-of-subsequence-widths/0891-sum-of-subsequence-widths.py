@@ -3,7 +3,6 @@ class Solution:
         MOD = 10 ** 9 + 7
         ans = 0
         nums = sorted(nums)
-        print(nums)
 
         for i, num in enumerate(nums):
             ans += pow(2, i, MOD) * num
