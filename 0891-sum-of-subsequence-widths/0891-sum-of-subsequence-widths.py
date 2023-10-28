@@ -5,8 +5,6 @@ class Solution:
         nums = sorted(nums)
 
         for i, num in enumerate(nums):
-            ans += pow(2, i, MOD) * num
-            ans -= pow(2, len(nums) - i - 1, MOD) * num
-            ans %= MOD
+            ans += pow(2, i, MOD) * num - pow(2, len(nums) - i - 1, MOD) * num
             
-        return ans
+        return ans % MOD
