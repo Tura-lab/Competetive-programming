@@ -16,10 +16,15 @@ class Solution:
                 for num in cur_sums:
                     val += num
                     
-                    idx = bisect_left(sorted_sums, val - k)
-                    
-                    if idx < len(sorted_sums) and val - sorted_sums[idx] <= k:
-                        best = max(best, val - sorted_sums[idx])
+                    l, r = 0, len(sorted_sums) - 1
+                    while l <= r:
+                        mid = l + (r - l) // 2
+                        
+                        if val - sorted_sums[mid] <= k:
+                            best = max(best, val - sorted_sums[mid])
+                            r = mid - 1
+                        else:
+                            l = mid + 1
                     
                     bisect.insort(sorted_sums, val)
                         
