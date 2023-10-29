@@ -1,17 +1,36 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        @cache
-        def dfs(i, count):
-            if i == len(s):
-                return count == 0
-            if count < 0:
-                return False
-            
-            if s[i] == '(':
-                return dfs(i + 1, count + 1)
-            elif s[i] == ')':
-                return dfs(i + 1, count - 1)
-            
-            return dfs(i + 1, count + 1) or dfs(i + 1, count - 1) or dfs(i + 1, count)
+        s = list(s)
+        stars = deque()
+        stack = []
         
-        return dfs(0, 0)
+        for i, l in enumerate(s):
+            if l == '*':
+                stars .append(i)
+            elif l == '(':
+                stack.append(i)
+            else:
+                if stack:
+                    stack.pop()
+                elif stars:
+                    idx = stars.popleft()
+                    s[idx] = " "
+                else:
+                    return False
+
+        if not stack:
+            return True
+        
+        i, j = len(stack) - 1, len(s) - 1
+        
+        while i >= 0 and j >= 0:
+            while j > stack[i] and s[j] != '*':
+                j -= 1
+                
+            if j == stack[i]:
+                return False
+                
+            i -= 1
+            j -= 1
+        
+        return True
