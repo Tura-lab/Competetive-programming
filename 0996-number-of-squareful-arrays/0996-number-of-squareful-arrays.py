@@ -11,7 +11,7 @@ class Solution:
             if nums[i + 1] == nums[i]:
                 nexts[i] = nexts[i + 1]
         
-        @cache
+        # @cache
         def dfs(past, count, mask):
             if count == len(nums):
                 return 1
