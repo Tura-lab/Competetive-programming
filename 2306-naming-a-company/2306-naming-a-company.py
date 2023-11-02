@@ -10,13 +10,12 @@ class Solution:
         dp = [[0] * 26 for _ in range(26)]
         
         for idea in ideas:
+            curs = [hash(chr(i + ord('a')) + idea[1:]) for i in range(26)]
             for i in range(26):
-                cur = hash(chr(i + ord('a')) + idea[1:])
-                if cur not in found:
+                if curs[i] not in found:
                     ans += dp[i][ord(idea[0]) - ord('a')]
             for i in range(26):
-                cur = hash(chr(i + ord('a')) + idea[1:])
-                if cur not in found:
+                if curs[i] not in found:
                     dp[ord(idea[0]) - ord('a')][i] += 1
 
         return 2 * ans
