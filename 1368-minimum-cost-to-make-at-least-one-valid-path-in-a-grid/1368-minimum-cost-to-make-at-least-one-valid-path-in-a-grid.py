@@ -14,15 +14,6 @@ class Solution:
         def in_bound(row, col):
             return -1 < row < rows and -1 < col < cols
         
-        graph = defaultdict(list)
-        for i in range(rows):
-            for j in range(cols):
-                for x,y in [[1,0], [0, 1], [0, -1], [-1, 0]]:
-                    nx, ny = i + x, j + y
-                    if in_bound(nx, ny):
-                        graph[(i, j)].append(((nx, ny), 0 if get_sign(x, y) == grid[i][j] else 1))
-                        
-        
         heap = []
         heappush(heap, (0, (0, 0)))
         
@@ -31,8 +22,10 @@ class Solution:
             cost, node = heappop(heap)
             if node not in distances:
                 distances[node] = cost
-                for v, w in graph[node]:
-                    if v not in distances:
+                for x, y in [[1,0], [0, 1], [0, -1], [-1, 0]]:
+                    v = (x + node[0], y + node[1])
+                    w = get_sign(x, y) != grid[node[0]][node[1]]
+                    if in_bound(v[0], v[1]) and v not in distances:
                         heappush(heap, (cost + w, v))
 
 
