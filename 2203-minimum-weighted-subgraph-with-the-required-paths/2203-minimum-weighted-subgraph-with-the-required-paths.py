@@ -1,9 +1,5 @@
 class Solution:
     def minimumWeight(self, n: int, edges: List[List[int]], src1: int, src2: int, dest: int) -> int:
-        toDest = [float('inf') for _ in range(n)]
-        fromA = [float('inf') for _ in range(n)]
-        fromB = [float('inf') for _ in range(n)]
-        
         graph = [[] for _ in range(n)]
         reversed_graph = [[] for _ in range(n)]
         for a, b, c in edges:
@@ -24,7 +20,6 @@ class Solution:
                             heappush(heap, (cost + w, v))
             
             return distances
-
         
         from1 = d2(src1, graph)
         from2 = d2(src2, graph)
