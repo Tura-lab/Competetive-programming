@@ -1,14 +1,19 @@
 class Solution:
     def twoCitySchedCost(self, costs: List[List[int]]) -> int:
-        n = len(costs)
+        n = len(costs) // 2
+        '''
+        -10, -170, 10, 350
+        [[10,20],[30,200],[30,20],[400,50]]
+        10, 30, 30, 400
+        20, 200, 20, 50
+        '''
+        new = sorted([(costs[i][0] - costs[i][1], i) for i in range(len(costs))])
         
-        @cache
-        def dfs(i, count):
-            if count > n // 2:
-                return float('inf')
-            if i == n:
-                return 0 if count == n // 2 else float('inf')
+        ans = 0
+        for i in range(n):
+            ans += costs[new[i][1]][0]
             
-            return min(costs[i][0] + dfs(i + 1, count + 1), costs[i][1] + dfs(i + 1, count))
+        for i in range(n, len(costs)):
+            ans += costs[new[i][1]][1]
         
-        return dfs(0, 0)
+        return ans
