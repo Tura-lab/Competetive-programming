@@ -7,13 +7,13 @@ class Solution:
         10, 30, 30, 400
         20, 200, 20, 50
         '''
-        new = sorted([(costs[i][0] - costs[i][1], i) for i in range(len(costs))])
+        costs.sort(key = lambda x: x[0] - x[1])
         
         ans = 0
         for i in range(n):
-            ans += costs[new[i][1]][0]
+            ans += costs[i][0]
             
         for i in range(n, len(costs)):
-            ans += costs[new[i][1]][1]
+            ans += costs[i][1]
         
         return ans
